@@ -8,3 +8,58 @@
 #rhizoome-logo {
     max-width: 100%;
 }
+
+.sp-list table tbody td:nth-child(odd) {
+    font-weight: bold;
+    color: var(--sidebar-active);
+    text-align: right;
+}
+
+.sp-list table tbody td:nth-child(even) {
+    background-color: var(--bg);
+}
+
+.sp-list table tbody td:nth-child(odd) {
+    background-color: var(--table-alternate-bg);
+}
+
+.sp-list table thead {
+    display: none;
+}
+
+.sp-list tr {
+    background: inherit;
+}
+
+.sp-list tr:nth-child(2n) {
+    background: inherit;
+}
+
+.sp-list-left table {
+    margin: inherit;
+}
+
+.content img {
+  cursor: zoom-in;
+  position: relative;
+  z-index: 2;
+}
+
+.content img:active {
+  position: fixed;
+  display: flex;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
+  margin: auto;
+  z-index: 1073741824;
+  cursor: zoom-out;
+  background: var(--bg);
+  max-width: calc(100vw - 40px);
+  max-height: calc(100vh - 40px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
