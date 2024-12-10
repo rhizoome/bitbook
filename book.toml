@@ -1,0 +1,6 @@
+[book]
+authors = ["Jean-Louis Fuchs"]
+language = "en"
+multilingual = false
+src = "src"
+title = "BitBook"
