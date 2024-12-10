@@ -28,6 +28,7 @@
         <link rel="stylesheet" href="{{ path_to_root }}css/variables.css">
         <link rel="stylesheet" href="{{ path_to_root }}css/general.css">
         <link rel="stylesheet" href="{{ path_to_root }}css/chrome.css">
+        <link rel="stylesheet" href="{{ path_to_root }}css/user.css">
         {{#if print_enable}}
         <link rel="stylesheet" href="{{ path_to_root }}css/print.css" media="print">
         {{/if}}
@@ -211,8 +212,9 @@
 
                         <div style="clear: both"></div>
                     </nav>
-                    <div id="giscus">
                     <!-- giscus -->
+                    {{#unless live_reload_endpoint}}
+                    <div id="giscus">
                         <script src="https://giscus.app/client.js"
                             data-repo="rhizoome/bitbook"
                             data-repo-id="R_kgDONbo_Fg"
@@ -230,6 +232,7 @@
                             crossorigin="anonymous"
                         async>
                     </div>
+                    {{/unless}}
                 </div>
             </div>
 
