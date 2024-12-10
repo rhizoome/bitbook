@@ -1,3 +1,6 @@
 # Summary
 
-- [Chapter 1](./chapter_1.md)
+[BitBook](bitbook.md)
+
+- [Effects](effects/effects.md)
+  - [Stereo Imager](effects/stereo_imager.md)

@@ -6,4 +6,6 @@ src = "src"
 title = "BitBook"
 
 [output.html]
+default-theme = "rust"
+preferred-dark-theme = "ayu"
 additional-css = ["theme/css/user.css"]

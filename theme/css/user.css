@@ -3,3 +3,8 @@
     margin-right: auto;
     max-width: var(--content-max-width);
 }
+
+
+#rhizoome-logo {
+    max-width: 100%;
+}

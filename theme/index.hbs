@@ -111,7 +111,10 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <!-- populated by js -->
-            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <div class="sidebar-scrollbox">
+                <img id="rhizoome-logo" src="{{ path_to_root }}rhizoome-logo.webp" alt="Rhizoome">
+                <mdbook-sidebar-scrollbox ></mdbook-sidebar-scrollbox>
+            </div>
             <noscript>
                 <iframe class="sidebar-iframe-outer" src="{{ path_to_root }}toc.html"></iframe>
             </noscript>
