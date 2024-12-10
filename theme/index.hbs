@@ -215,27 +215,7 @@
 
                         <div style="clear: both"></div>
                     </nav>
-                    <!-- giscus -->
-                    {{#unless live_reload_endpoint}}
-                    <div id="giscus">
-                        <script src="https://giscus.app/client.js"
-                            data-repo="rhizoome/bitbook"
-                            data-repo-id="R_kgDONbo_Fg"
-                            data-category="Book"
-                            data-category-id="DIC_kwDONbo_Fs4ClGWs"
-                            data-mapping="specific"
-                            data-term="{{path}}"
-                            data-strict="0"
-                            data-reactions-enabled="1"
-                            data-emit-metadata="0"
-                            data-input-position="bottom"
-                            data-theme="preferred_color_scheme"
-                            data-lang="en"
-                            data-loading="lazy"
-                            crossorigin="anonymous"
-                        async>
-                    </div>
-                    {{/unless}}
+                    <div id="giscus"></div>
                 </div>
             </div>
 
@@ -351,6 +331,35 @@
         <img src="https://shn.1042.ch/ingress/ee00f630-4d03-41dc-ab80-c1aa7a548839/pixel.gif">
     </noscript>
     <script defer src="https://shn.1042.ch/ingress/ee00f630-4d03-41dc-ab80-c1aa7a548839/script.js"></script>
+    {{/unless}}
+
+    {{#unless liive_reload_endpoint}}
+    <script defer>
+    if ('{{ path }}' != '404.md') {
+        const targetContainer = document.getElementById('giscus');
+        if (targetContainer) {
+              const gs = document.createElement('script');
+              gs.src = "https://giscus.app/client.js";
+              gs.setAttribute('data-repo', 'rhizoome/bitbook');
+              gs.setAttribute('data-repo-id', 'R_kgDONbo_Fg');
+              gs.setAttribute('data-category', 'Book');
+              gs.setAttribute('data-category-id', 'DIC_kwDONbo_Fs4ClGWs');
+              gs.setAttribute('data-mapping', 'specific');
+              gs.setAttribute('data-term', '{{ path }}');
+              gs.setAttribute('data-strict', '0');
+              gs.setAttribute('data-reactions-enabled', '1');
+              gs.setAttribute('data-emit-metadata', '0');
+              gs.setAttribute('data-theme', 'preferred_color_scheme');
+              gs.setAttribute('data-lang', 'en');
+              gs.setAttribute('data-loading', 'lazy');
+              gs.setAttribute('crossorigin', 'anonymous');
+              gs.async = true;
+              targetContainer.appendChild(gs)
+        } else {
+              console.error('Target container not found: #giscus');
+        }
+    }
+    </script>
     {{/unless}}
     </body>
 </html>
