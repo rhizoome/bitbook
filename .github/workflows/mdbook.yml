@@ -19,7 +19,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      MDBOOK_VERSION: 0.4.36
+      MDBOOK_VERSION: 0.4.43
     steps:
       - uses: actions/checkout@v4
 
@@ -51,7 +51,10 @@ jobs:
         uses: actions/configure-pages@v5
 
       - name: Build with mdBook
-        run: mdbook build
+        run: |
+          mdbook --version
+          mdbook build
+          find book
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
