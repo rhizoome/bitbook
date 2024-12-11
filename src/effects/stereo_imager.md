@@ -58,6 +58,7 @@ changes.
 |-|-|
 | Low / Mid / High Solo | **Solo the indicated bands**. Isolated listening of the selected bands |
 | Low / Mid / High | **Adjust stereo width in percent**. 0% - 100% decrese stereo with, 100% - 200% increase stereo width |
+| Global width | Adjust stereo width in percent after bands have been combined |
 | Low Freq | Crossover-frequency between low and mid band |
 | High Freq | Crossover-frequency between high and mid band |
 
