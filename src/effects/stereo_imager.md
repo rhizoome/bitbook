@@ -1,5 +1,6 @@
 ```toml
 date = "2024-12-11"
+giscus = "A1X-5bc"
 ```
 
 # Stereo Imager

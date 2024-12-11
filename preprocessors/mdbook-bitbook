@@ -6,6 +6,35 @@ import json
 import tomllib
 from enum import Enum
 
+giscus_template = """
+    <script defer>
+    window.onload = function() {{
+        const targetContainer = document.getElementById('giscus');
+        if (targetContainer) {{
+              const gs = document.createElement('script');
+              gs.src = "https://giscus.app/client.js";
+              gs.setAttribute('data-repo', 'rhizoome/bitbook');
+              gs.setAttribute('data-repo-id', 'R_kgDONbo_Fg');
+              gs.setAttribute('data-category', 'Book');
+              gs.setAttribute('data-category-id', 'DIC_kwDONbo_Fs4ClGWs');
+              gs.setAttribute('data-mapping', 'specific');
+              gs.setAttribute('data-term', '{giscus_id}');
+              gs.setAttribute('data-strict', '0');
+              gs.setAttribute('data-reactions-enabled', '1');
+              gs.setAttribute('data-emit-metadata', '0');
+              gs.setAttribute('data-theme', 'preferred_color_scheme');
+              gs.setAttribute('data-lang', 'en');
+              gs.setAttribute('data-loading', 'lazy');
+              gs.setAttribute('crossorigin', 'anonymous');
+              gs.async = true;
+              targetContainer.appendChild(gs)
+        }} else {{
+              console.error('Target container not found: #giscus');
+        }}
+    }};
+    </script>
+"""
+
 class State(Enum):
     BLOCK_INACTIVE = 0
     BLOCK_ACTIVE = 1
@@ -35,6 +64,11 @@ def get_frontmatter(content):
                 add(line)
     else:
         return content, {}
+
+def add_giscus(frontmatter, content):
+    if "giscus" in frontmatter:
+        return content + "\n\n" + giscus_template.format(giscus_id=frontmatter["giscus"]).strip()
+    return content
 
 def class_hint(content):
     state = State.BLOCK_INACTIVE
@@ -86,8 +120,10 @@ def first_pass(context, book, item):
     chapter = item["Chapter"]
     context["chapters"].append(chapter)
     content = chapter["content"]
-    content, chapter["sp-frontmatter"] = get_frontmatter(content)
+    content, frontmatter = get_frontmatter(content)
+    chapter["sp-frontmatter"] = frontmatter
     content = class_hint(content)
+    content = add_giscus(frontmatter, content)
     chapter["content"] = content
 
 def second_pass(context, book, item):
