@@ -35,6 +35,9 @@ changes.
 
 ## Key Features
 
+- Per band visualisation of stereo image change
+  - Red: Narrowing
+  - Turquoise: Widening
 - Mastering
 	- Narrow stereo image in sub-bass range for enhanced acoustic impact and
 	  reduced phase interactions in a room
