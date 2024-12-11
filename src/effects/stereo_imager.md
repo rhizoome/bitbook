@@ -1,19 +1,14 @@
 # Stereo Imager
 
-<div class="sp-list">
-
+{:sp-list:}
 | | | | |
 |-|-|-|-|
 | Version | 2024.12.11 | ID | GGdz |
 | Bitwig Version | 5.3 | Type | FX Grid |
 
-</div>
-
-<div class="sp-download">
-
+{:sp-download:}
 [Download](https://raw.githubusercontent.com/rhizoome/bitbook/refs/heads/main/Library/Presets/FX%20Grid/RH%20Stereo%20Imager%20Grid%20%5BGGdz%5D.bwpreset) 
 
-</div>
 
 This multi-band stereo imager is designed to process audio by splitting the
 frequency spectrum into distinct bands (low, mid, and high) using Bitwig’s
@@ -29,7 +24,9 @@ changes.
 <br>
 
 ![Stereo Imager](stereo_imager/stereo_imager.webp)
-\[click to zoom\]
+
+{:sp-center sp-small:}
+[click to zoom huhu]
 
 </div>
 
@@ -52,8 +49,7 @@ changes.
 
 ![Controls](stereo_imager/controls.webp)
 
-<div class="sp-list">
-
+{:sp-list:}
 | | |
 |-|-|
 | Low / Mid / High Solo | **Solo the indicated bands**. Isolated listening of the selected bands |
@@ -62,7 +58,6 @@ changes.
 | Low Freq | Crossover-frequency between low and mid band |
 | High Freq | Crossover-frequency between high and mid band |
 
-</div>
 
 ## License
 

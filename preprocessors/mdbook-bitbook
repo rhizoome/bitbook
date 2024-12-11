@@ -1,0 +1,77 @@
+#!/usr/bin/env python3
+
+import sys
+import re
+import json
+from enum import Enum
+
+class State(Enum):
+    BLOCK_INACTIVE = 0
+    BLOCK_ACTIVE = 1
+
+def eprint(*args, **kwargs):
+    print(*args, file=sys.stderr, **kwargs)
+
+def format(css_class, block_lines):
+    block_content = "".join(block_lines)
+    return f"<div class=\"{css_class}\">\n\n{block_content}\n</div>\n\n"
+
+# Allow for class names that include dashes
+pattern = re.compile(r'^\s*\{\:([ \w-]+)\:\}\s*$')
+
+def class_hint(content):
+    state = State.BLOCK_INACTIVE
+    css_class = None
+    block_lines = []
+    output_lines = []
+    output = output_lines.append
+    for line in content.splitlines(keepends=True):
+        if state == State.BLOCK_INACTIVE:
+            # Check if line starts a block
+            match = pattern.match(line)
+            if match:
+                state = State.BLOCK_ACTIVE
+                css_class = match.group(1)
+                block_lines = []
+            else:
+                # Just pass normal lines through
+                output(line)
+        elif  state == State.BLOCK_ACTIVE:
+            # An empty line designates the end of the block
+            if line.strip() == "":
+                # Print the block inside a <div> with class `css_class`
+                output(format(css_class, block_lines))
+                state = State.BLOCK_INACTIVE
+                css_class = None
+                block_lines = []
+            else:
+                # Accumulate lines in the block
+                block_lines.append(line)
+        else:
+            raise NotImplementedError()
+    
+
+    # If input ended while still in BLOCK_ACTIVE state), print what we have
+    if state == State.BLOCK_ACTIVE:
+        output(format(css_class, block_lines))
+    return "".join(output_lines)
+
+def do_items(item):
+    chapter = item["Chapter"]
+    chapter["content"] = class_hint(chapter["content"])
+    for sub_item in chapter["sub_items"]:
+        do_items(sub_item)
+
+def run(context, book):
+    for section in book["sections"]:
+        do_items(section)
+    return context, book
+
+if __name__ == "__main__":
+    if len(sys.argv) > 1: # we check if we received any argument
+        if sys.argv[1] == "supports": 
+            sys.exit(0)
+
+    context, book = json.load(sys.stdin)
+    context, book = run(context, book)
+    print(json.dumps(book))

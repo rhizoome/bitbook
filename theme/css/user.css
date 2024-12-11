@@ -9,6 +9,10 @@
     max-width: 100%;
 }
 
+.sp-center {
+    margin: auto;
+}
+
 .sp-download {
     text-align: center;
     font-weight: bold;
