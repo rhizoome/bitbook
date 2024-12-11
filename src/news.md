@@ -1,5 +1,5 @@
 ```toml
-giscus = "A1X-ovu"
+giscus = "News (GoQ8)"
 ```
 
 # News
