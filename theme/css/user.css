@@ -9,6 +9,14 @@
     max-width: 100%;
 }
 
+.sp-figure-top p {
+    margin: 3em 0 0 0;
+}
+
+.sp-figure p {
+    margin: 0;
+}
+
 .sp-caption p {
     text-align: center;
     font-size: 80%;

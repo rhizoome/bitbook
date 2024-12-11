@@ -26,8 +26,7 @@ changes.
 
 <div class="sp-float-right">
 
-<br>
-
+{:sp-figure-top:}
 ![Stereo Imager](stereo_imager/stereo_imager.webp)
 
 {:sp-caption:}
