@@ -3,6 +3,7 @@
 import sys
 import re
 import json
+import tomllib
 from enum import Enum
 
 class State(Enum):
@@ -16,8 +17,24 @@ def format(css_class, block_lines):
     block_content = "".join(block_lines)
     return f"<div class=\"{css_class}\">\n\n{block_content}\n</div>\n\n"
 
-# Allow for class names that include dashes
-pattern = re.compile(r'^\s*\{\:([ \w-]+)\:\}\s*$')
+class_pattern = re.compile(r"^\s*\{\:([ \w-]+)\:\}\s*$")
+front_pattern = re.compile(r"^\s*```toml\s*$")
+end_pattern = re.compile(r"^\s*```\s*$")
+
+def get_frontmatter(content):
+    lines = content.splitlines(keepends=True)
+    matter = []
+    add = matter.append
+    if front_pattern.match(lines[0]):
+        index = 3
+        for line in lines[1:]:
+            if end_pattern.match(line):
+                return "".join(lines[index:]), tomllib.loads("".join(matter))
+            else:
+                index += 1
+                add(line)
+    else:
+        return content, {}
 
 def class_hint(content):
     state = State.BLOCK_INACTIVE
@@ -28,7 +45,7 @@ def class_hint(content):
     for line in content.splitlines(keepends=True):
         if state == State.BLOCK_INACTIVE:
             # Check if line starts a block
-            match = pattern.match(line)
+            match = class_pattern.match(line)
             if match:
                 state = State.BLOCK_ACTIVE
                 css_class = match.group(1)
@@ -56,15 +73,30 @@ def class_hint(content):
         output(format(css_class, block_lines))
     return "".join(output_lines)
 
-def do_items(item):
+def first_pass(context, book, item):
     chapter = item["Chapter"]
-    chapter["content"] = class_hint(chapter["content"])
-    for sub_item in chapter["sub_items"]:
-        do_items(sub_item)
+    context["chapters"].append(chapter)
+    content = chapter["content"]
+    content, chapter["sp-frontmatter"] = get_frontmatter(content)
+    content = class_hint(content)
+    chapter["content"] = content
 
-def run(context, book):
+def second_pass(context, book, item):
+    chapter = item["Chapter"]
+    if chapter["name"] == "BitBook":
+        content = chapter["content"]
+        content = content.replace("{-sp-news-}", "# News")
+        chapter["content"] = content
+
+def do_items(context, book, item, do_pass):
+    do_pass(context, book, item)
+    chapter = item["Chapter"]
+    for sub_item in chapter["sub_items"]:
+        do_items(context, book, sub_item, do_pass)
+
+def run(context, book, do_pass):
     for section in book["sections"]:
-        do_items(section)
+        do_items(context, book, section, do_pass)
     return context, book
 
 if __name__ == "__main__":
@@ -73,5 +105,7 @@ if __name__ == "__main__":
             sys.exit(0)
 
     context, book = json.load(sys.stdin)
-    context, book = run(context, book)
+    context["chapters"] = []
+    context, book = run(context, book, first_pass)
+    context, book = run(context, book, second_pass)
     print(json.dumps(book))

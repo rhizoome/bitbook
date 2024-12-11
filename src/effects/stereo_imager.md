@@ -1,3 +1,7 @@
+```toml
+date = "2024-12-11"
+```
+
 # Stereo Imager
 
 {:sp-list:}
@@ -25,8 +29,8 @@ changes.
 
 ![Stereo Imager](stereo_imager/stereo_imager.webp)
 
-{:sp-center sp-small:}
-[click to zoom huhu]
+{:sp-caption:}
+[click to zoom]
 
 </div>
 
