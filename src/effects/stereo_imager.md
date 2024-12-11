@@ -4,7 +4,7 @@
 
 | | | | |
 |-|-|-|-|
-| Version | 2024.12.10 | ID | GGdz |
+| Version | 2024.12.11 | ID | GGdz |
 | Bitwig Version | 5.3 | Type | FX Grid |
 
 </div>
