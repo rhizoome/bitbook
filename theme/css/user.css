@@ -9,18 +9,19 @@
     max-width: 100%;
 }
 
-.sp-figure-top p {
-    margin: 3em 0 0 0;
+.sp-inline-float {
+    width: 100%;    
 }
 
-.sp-figure p {
+.sp-inline-float img {
     margin: 0;
 }
 
-.sp-caption p {
+.sp-inline-float p {
+    margin: 0;
     text-align: center;
-    font-size: 80%;
-    margin: 0;
+    font-size: 90%;
+    color: var(--sidebar-active);
 }
 
 .sp-download {
@@ -28,16 +29,6 @@
     font-weight: bold;
     font-size: 130%;
     color: var(--sidebar-active) !important;
-}
-
-.sp-float-left {
-    width: 40%;
-    float: left;
-}
-
-.sp-float-right {
-    width: 40%;
-    float: right;
 }
 
 .sp-list table tbody td:nth-child(odd) {
@@ -74,7 +65,6 @@
 .content img {
   cursor: zoom-in;
   position: relative;
-  z-index: 2;
 }
 
 .content img:active {
@@ -88,7 +78,7 @@
   z-index: 1073741824;
   cursor: zoom-out;
   background: var(--bg);
-  max-width: calc(100vw - 40px);
+  max-width: calc(100vw - 40px) !important;
   max-height: calc(100vh - 40px);
   width: auto;
   height: auto;

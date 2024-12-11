@@ -46,6 +46,7 @@ def format(css_class, block_lines):
     block_content = "".join(block_lines)
     return f"<div class=\"{css_class}\">\n\n{block_content}\n</div>\n\n"
 
+image_pattern = re.compile(r"\{-([\w/.-]+)(>|<)(\d+)\|?(.*?)\}")
 class_pattern = re.compile(r"^\s*\{\:([ \w-]+)\:\}\s*$")
 front_pattern = re.compile(r"^\s*```toml\s*$")
 end_pattern = re.compile(r"^\s*```\s*$")
@@ -107,6 +108,24 @@ def class_hint(content):
         output(format(css_class, block_lines))
     return "".join(output_lines)
 
+def image_template(match):
+    image = match.group(1)
+    direction = "left" if match.group(2) == "<" else "right" 
+    max_width = match.group(3)
+    caption = match.group(4)
+    if caption:
+        return f'''
+<div class="sp-inline-float" data-dir="{direction}" data-px="{max_width}">
+    <img src="{image}" alt="{caption}" class="sp-inline-float">
+    <p class="sp-caption">{caption}</p>
+</div>
+'''
+    else:
+        return f'<img src="{image}" alt="{image}" class="sp-inline-float" data-dir="{direction}" data-px="{max_width}">'
+
+def image_sub(content):
+    return image_pattern.sub(image_template, content)
+
 def build_news(chapters):
     relevant = [x for x in chapters if "date" in x["sp-frontmatter"].keys()]
     relevant = sorted(relevant, key=lambda x: x["sp-frontmatter"]["date"])
@@ -120,6 +139,7 @@ def first_pass(context, book, item):
     chapter = item["Chapter"]
     context["chapters"].append(chapter)
     content = chapter["content"]
+    content = image_sub(content)
     content, frontmatter = get_frontmatter(content)
     chapter["sp-frontmatter"] = frontmatter
     content = class_hint(content)

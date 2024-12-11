@@ -14,39 +14,23 @@ giscus = "Stereo Imager (dpu5)"
 {:sp-download:}
 [Download](https://raw.githubusercontent.com/rhizoome/bitbook/refs/heads/main/Library/Presets/FX%20Grid/RH%20Stereo%20Imager%20Grid%20%5BGGdz%5D.bwpreset) 
 
+This multi-band stereo imager is designed to process audio by splitting the frequency spectrum into distinct bands (low, mid, and high) using Bitwig’s Crossover-3 device. Once divided, each band’s stereo width - the perceived spatial distance of panned sound sources - can be adjusted individually. After these adjustments, the bands are seamlessly recombined.
 
-This multi-band stereo imager is designed to process audio by splitting the
-frequency spectrum into distinct bands (low, mid, and high) using Bitwig’s
-Crossover-3 device. Once divided, each band’s stereo width - the perceived
-spatial distance of panned sound sources - can be adjusted individually. After
-these adjustments, the bands are seamlessly recombined.
-
-Crossover filters are specially designed to recombine without overlap or phase
-changes.
-
-<div class="sp-float-right">
-
-{:sp-figure-top:}
-![Stereo Imager](stereo_imager/stereo_imager.webp)
-
-{:sp-caption:}
-[click to zoom]
-
-</div>
+Crossover filters are specially designed to recombine without overlap or phase changes.
 
 ## Key Features
 
-- Per band visualisation of stereo image change
+{-stereo_imager/stereo_imager.webp>300|Click to zoom}
+
+-  Per band visualisation of stereo image change
   - Red: Narrowing
   - Turquoise: Widening
 - Mastering
-	- Narrow stereo image in sub-bass range for enhanced acoustic impact and
-	  reduced phase interactions in a room
+	- Narrow stereo image in sub-bass range for enhanced acoustic impact and reduced phase interactions in a room
 	-	Widen stereo image in mid and high range for a more immersive experience
 - Individual tracks
 	-	Creative mixing and shaping stereo image
-	- Similar to the Haas effect, widening the stereo image can lift a track
-	  above the mix, adding depth and clarity
+	- Similar to the Haas effect, widening the stereo image can lift a track above the mix, adding depth and clarity
 	-	Reduce extreme swings caused by automated or algorithmic panning
 
 ## Controls
