@@ -5,7 +5,13 @@
 | | | | |
 |-|-|-|-|
 | Version | 2024.12.10 | ID | GGdz |
-| Bitwig Version | 5.2 | Type | FX Grid |
+| Bitwig Version | 5.3 | Type | FX Grid |
+
+</div>
+
+<div class="sp-download">
+
+[Download](https://raw.githubusercontent.com/rhizoome/bitbook/refs/heads/main/Library/Presets/FX%20Grid/RH%20Stereo%20Imager%20Grid%20%5BGGdz%5D.bwpreset) 
 
 </div>
 

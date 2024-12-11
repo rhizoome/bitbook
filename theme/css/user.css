@@ -9,6 +9,13 @@
     max-width: 100%;
 }
 
+.sp-download {
+    text-align: center;
+    font-weight: bold;
+    font-size: 130%;
+    color: var(--sidebar-active) !important;
+}
+
 .sp-float-left {
     width: 40%;
     float: left;
