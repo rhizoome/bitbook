@@ -4,4 +4,6 @@
   <source src="logo.mp4" type="video/mp4">
 </video>
 
+## News
+
 {-sp-news-}
