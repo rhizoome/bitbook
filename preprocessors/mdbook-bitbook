@@ -181,10 +181,11 @@ def second_pass(context, book, item):
 
 
 def do_items(context, book, item, do_pass):
-    do_pass(context, book, item)
-    chapter = item["Chapter"]
-    for sub_item in chapter["sub_items"]:
-        do_items(context, book, sub_item, do_pass)
+    chapter = item.get("Chapter")
+    if chapter:
+        do_pass(context, book, item)
+        for sub_item in chapter["sub_items"]:
+            do_items(context, book, sub_item, do_pass)
 
 def run(context, book, do_pass):
     for section in book["sections"]:
