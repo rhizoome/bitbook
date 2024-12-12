@@ -6,8 +6,26 @@ import json
 import tomllib
 from enum import Enum
 
+language_template = """
+<script defer>
+    document.addEventListener("DOMContentLoaded", function () {{
+        function getUserLanguage() {{
+            return navigator.language || navigator.userLanguage;
+        }}
+        const userLang = getUserLanguage().toLowerCase();
+        const baseLang = userLang.split('-')[0];
+        const supportedLanguages = {languages};
+        if (supportedLanguages.includes(baseLang)) {{
+            const currentUrl = window.location.href;
+            const updatedUrl = currentUrl.replace(/\\.html$/, `_${{baseLang}}.html`);
+            window.location.href = updatedUrl;
+        }}
+    }});
+</script>
+"""
+
 giscus_template = """
-    <script defer>
+<script defer>
     window.onload = function() {{
         const targetContainer = document.getElementById('giscus');
         if (targetContainer) {{
@@ -32,7 +50,7 @@ giscus_template = """
               console.error('Target container not found: #giscus');
         }}
     }};
-    </script>
+</script>
 """
 
 class State(Enum):
@@ -68,7 +86,7 @@ def get_frontmatter(content):
 
 def add_giscus(frontmatter, content):
     if "giscus" in frontmatter:
-        return content + "\n\n" + giscus_template.format(giscus_id=frontmatter["giscus"]).strip()
+        return content + "\n\n" + giscus_template.format(giscus_id=frontmatter["giscus"])
     return content
 
 def class_hint(content):
@@ -135,6 +153,13 @@ def build_news(chapters):
         add(f"- {chapter["sp-frontmatter"]["date"]} [{chapter["name"]}]({chapter["path"]})")
     return "\n".join(news)
 
+def language(chapter, content):
+    langs = chapter["sp-frontmatter"].get("languages")
+    if langs:
+        return content + "\n\n" + language_template.format(languages=json.dumps(langs))
+    else:
+        return content
+
 def first_pass(context, book, item):
     chapter = item["Chapter"]
     context["chapters"].append(chapter)
@@ -148,10 +173,12 @@ def first_pass(context, book, item):
 
 def second_pass(context, book, item):
     chapter = item["Chapter"]
+    content = chapter["content"]
     if chapter["name"] in ("BitBook", "News"):
-        content = chapter["content"]
         content = content.replace("{-sp-news-}", build_news(context["chapters"]))
-        chapter["content"] = content
+    content = language(chapter, content)
+    chapter["content"] = content
+
 
 def do_items(context, book, item, do_pass):
     do_pass(context, book, item)
