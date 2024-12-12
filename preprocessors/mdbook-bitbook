@@ -6,24 +6,6 @@ import json
 import tomllib
 from enum import Enum
 
-language_template = """
-<script defer>
-    document.addEventListener("DOMContentLoaded", function () {{
-        function getUserLanguage() {{
-            return navigator.language || navigator.userLanguage;
-        }}
-        const userLang = getUserLanguage().toLowerCase();
-        const baseLang = userLang.split('-')[0];
-        const supportedLanguages = {languages};
-        if (supportedLanguages.includes(baseLang)) {{
-            const currentUrl = window.location.href;
-            const updatedUrl = currentUrl.replace(/\\.html$/, `_${{baseLang}}.html`);
-            window.location.href = updatedUrl;
-        }}
-    }});
-</script>
-"""
-
 giscus_template = """
 <script defer>
     window.onload = function() {{
@@ -153,13 +135,6 @@ def build_news(chapters):
         add(f"- {chapter["sp-frontmatter"]["date"]} [{chapter["name"]}]({chapter["path"]})")
     return "\n".join(news)
 
-def language(chapter, content):
-    langs = chapter["sp-frontmatter"].get("languages")
-    if langs:
-        return content + "\n\n" + language_template.format(languages=json.dumps(langs))
-    else:
-        return content
-
 def first_pass(context, book, item):
     chapter = item["Chapter"]
     context["chapters"].append(chapter)
@@ -176,7 +151,6 @@ def second_pass(context, book, item):
     content = chapter["content"]
     if chapter["name"] in ("BitBook", "News"):
         content = content.replace("{-sp-news-}", build_news(context["chapters"]))
-    content = language(chapter, content)
     chapter["content"] = content
 
 
